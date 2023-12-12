@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- fonts: google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- icons: fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/516352fdd8.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- website title -->
+    <title>Color generator app - JS advanced project</title>
+    <!-- css files -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="color-generator">
+      <section class="section">
+        <div class="section-title">
+          <h3>Display Color</h3>
+          <button id="generateColorBtn" title="Generate random color">
+            Generate Color
+            <i class="fa-solid fa-palette"></i>
+          </button>
+        </div>
+        <div class="preivew-box" id="colorPreview"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h3>Change & Copy Color</h3>
+          <div class="action-group">
+            <button id="saveColorBtn" title="Save to collections">
+              Save
+              <i class="fa-solid fa-save"></i>
+            </button>
+            <button id="copyColorBtn" title="Copy to clipboard">
+              Copy
+              <i class="fa-solid fa-copy"></i>
+            </button>
+          </div>
+        </div>
+        <div class="color-changer-fileds">
+          <div class="copy-color">
+            <p class="subtitle">Select Copy Mode</p>
+            <div class="copy-mode">
+              <div class="mode hex-mode">
+                <input
+                  type="radio"
+                  name="color-mode"
+                  id="hexModeCopy"
+                  value="hex"
+                  checked
+                />
+                <label for="hexModeCopy">Hex</label>
+              </div>
+              <div class="mode rgb-mode">
+                <input
+                  type="radio"
+                  name="color-mode"
+                  id="rgbModeCopy"
+                  value="rgb"
+                />
+                <label for="rgbModeCopy">RGB</label>
+              </div>
+            </div>
+          </div>
+          <div class="color-changer">
+            <div class="color-field hex-field">
+              <label>Hex</label>
+              <div class="hex-code">
+                <span class="hash-tag">#</span>
+                <input type="text" id="hexInput" value="000000" />
+              </div>
+            </div>
+            <div class="color-field rgb-field">
+              <label>RGB</label>
+              <input type="text" id="rgbInput" value="rgb(0, 0, 0)" disabled />
+            </div>
+          </div>
+          <p class="error-msg" id="hexTypeError">
+            The code must be 6 charecters
+          </p>
+          <div class="rgb-slider">
+            <p class="subtitle">Adjust RGB Colors</p>
+            <div class="slider">
+              <div class="slide red-slider">
+                <label>
+                  <span>Red</span>
+                  <span id="redSliderVal">0</span>
+                </label>
+                <input
+                  type="range"
+                  id="redSlider"
+                  min="0"
+                  max="255"
+                  value="0"
+                  step="1"
+                />
+              </div>
+              <div class="slide green-slider">
+                <label>
+                  <span>Green</span>
+                  <span id="greenSliderVal">0</span>
+                </label>
+                <input
+                  type="range"
+                  id="greenSlider"
+                  min="0"
+                  max="255"
+                  value="0"
+                  step="1"
+                />
+              </div>
+              <div class="slide blue-slider">
+                <label>
+                  <span>Blue</span>
+                  <span id="blueSliderVal">0</span>
+                </label>
+                <input
+                  type="range"
+                  id="blueSlider"
+                  min="0"
+                  max="255"
+                  value="0"
+                  step="1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- default color palette container -->
+      <section class="section">
+        <div class="section-title">
+          <h3>Display Color</h3>
+        </div>
+        <!-- generates and append colorboxes dynamically -->
+        <div id="colorPalettes" class="color-palettes"></div>
+      </section>
+
+      <!-- custom color palette container -->
+      <section class="section">
+        <div class="section-title">
+          <h3>Collections</h3>
+        </div>
+
+        <div id="colorCollection" class="color-palettes"></div>
+      </section>
+
+      <!-- Background Preferences  -->
+      <section class="section">
+        <div class="section-title">
+          <h3>Background Preferences</h3>
+        </div>
+        <div class="background-preferences">
+          <div class="background-left-panel">
+            <p class="lead">Background Preview</p>
+            <div class="background-image" id="bgPreview"></div>
+            <div class="background-control">
+              <input
+                type="file"
+                accept="image/*"
+                class="file-input"
+                id="bgFileInput"
+              />
+              <button id="bgFileDeleteBtn">Remove</button>
+              <button id="bgFileUploadBtn">Upload</button>
+            </div>
+          </div>
+          <div class="background-right-panel">
+            <div class="bg-controller" id="bgController">
+              <div class="select-group">
+                <label class="lead" for="bg-size">Background Size</label>
+                <select name="bg-size" id="bg-size" class="text-input">
+                  <option value="auto">Auto</option>
+                  <option value="contain">Contain</option>
+                  <option value="cover">Cover</option>
+                </select>
+              </div>
+              <div class="select-group">
+                <label class="lead" for="bg-repeat">Background Repeat</label>
+                <select name="bg-repeat" id="bg-repeat" class="text-input">
+                  <option value="repeat">Repeat</option>
+                  <option value="no-repeat">No Repeat</option>
+                </select>
+              </div>
+              <div class="select-group">
+                <label class="lead" for="bg-position"
+                  >Background Position</label
+                >
+                <select name="bg-position" id="bg-position" class="text-input">
+                  <option value="left top">Left Top</option>
+                  <option value="left center">Left Center</option>
+                  <option value="left bottom">Left Bottom</option>
+                  <option value="right top">Right Top</option>
+                  <option value="right center">Right Center</option>
+                  <option value="right bottom">Right Bottom</option>
+                  <option value="center top">Center Top</option>
+                  <option value="center center">Center Center</option>
+                  <option value="center bottom">Center Bottom</option>
+                </select>
+              </div>
+              <div class="select-group">
+                <label class="lead" for="bg-attachment"
+                  >Background Attachment</label
+                >
+                <select
+                  name="bg-attachment"
+                  id="bg-attachment"
+                  class="text-input"
+                >
+                  <option value="local">Local</option>
+                  <option value="fixed">Fixed</option>
+                  <option value="scroll">Scroll</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- toast message container -->
+      <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="js/app.js" defer></script>
+  </body>
+</html>
